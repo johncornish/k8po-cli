@@ -1,0 +1,8 @@
+#!/usr/bin/env bash -e
+
+K8PO_ROOT=~/.k8po
+cmd=$1
+
+if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
+  echo "${K8PO_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}"
+fi
