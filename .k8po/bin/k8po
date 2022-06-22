@@ -26,8 +26,9 @@ function check_update() {
       upstreamhash=$(git rev-parse main@{upstream})
 
       if [ "${headhash}" != "${upstreamhash}" ]; then
-        read -p "k8po-cli is out of date; would you like to update? [y/n]" -n 1 -r
-        if [ "${REPLY}" =~ ^[Yy]$ ]; then
+        read -p "k8po-cli is out of date; would you like to update? [y/n]: " -n 1 -r
+        echo
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
           git pull
           reinstall
         fi
