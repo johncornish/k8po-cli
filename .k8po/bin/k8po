@@ -1,28 +1,50 @@
 #!/usr/bin/env bash -e
 
-function check_and_update() {
+K8PO_REPO_ROOT=~/workspace/k8po-cli
+K8PO_ROOT=~/.k8po
+
+function check_install() {
   if [ ! -d "${K8PO_REPO_ROOT}" ]; then
     mkdir -p ~/workspace/
     pushd ~/workspace/
       git clone git@github.com:johncornish/k8po-cli.git
     popd
 
-    install
+    reinstall
   fi
 }
 
-function install() {
+# thanks to https://www.christianengvall.se/check-for-changes-on-remote-origin-git-repository/
+function check_update() {
+  pushd "${K8PO_REPO_ROOT}"
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    if [ "${branch}" != "main" ]; then
+      echo 'tried to check k8po-cli repo for updates but not on main.'
+    else
+      git fetch
+      headhash=$(git rev-parse HEAD)
+      upstreamhash=$(git rev-parse master@{upstream})
+
+      if [ "${headhash}" != "${upstreamhash}" ]; then
+        read -p "k8po-cli is out of date; would you like to update? [y/n]" -n 1 -r
+        if [ "${REPLY}" =~ ^[Yy]$ ]; then
+          git pull
+          reinstall
+        fi
+      fi
+    fi
+  popd
+}
+
+function reinstall() {
   pushd "${K8PO_REPO_ROOT}"
     ./install.sh
   popd
 }
 
-K8PO_REPO_ROOT=~/workspace/k8po-cli
-K8PO_ROOT=~/.k8po
+check_install
+
 cmd=$1
-
-check_and_update
-
 if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
   ${K8PO_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}
 fi
