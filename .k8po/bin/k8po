@@ -43,6 +43,7 @@ function reinstall() {
 }
 
 check_install
+check_update
 
 cmd=$1
 if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
