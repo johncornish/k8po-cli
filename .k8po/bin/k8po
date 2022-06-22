@@ -1,15 +1,5 @@
 #!/usr/bin/env bash -e
 
-K8PO_REPO_ROOT=~/workspace/k8po-cli
-K8PO_ROOT=~/.k8po
-cmd=$1
-
-check_and_update
-
-if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
-  ${K8PO_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}
-fi
-
 function check_and_update() {
   if [ ! -d "${K8PO_REPO_ROOT}" ]; then
     mkdir -p ~/workspace/
@@ -26,3 +16,13 @@ function install() {
     ./install.sh
   popd
 }
+
+K8PO_REPO_ROOT=~/workspace/k8po-cli
+K8PO_ROOT=~/.k8po
+cmd=$1
+
+check_and_update
+
+if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
+  ${K8PO_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}
+fi
