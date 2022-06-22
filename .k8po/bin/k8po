@@ -23,7 +23,7 @@ function check_update() {
     else
       git fetch
       headhash=$(git rev-parse HEAD)
-      upstreamhash=$(git rev-parse master@{upstream})
+      upstreamhash=$(git rev-parse main@{upstream})
 
       if [ "${headhash}" != "${upstreamhash}" ]; then
         read -p "k8po-cli is out of date; would you like to update? [y/n]" -n 1 -r
