@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -e
 
 K8PO_REPO_ROOT=~/workspace/k8po-cli
-K8PO_ROOT=~/.k8po
+K8PO_CONFIG_ROOT=~/.k8po
 
 function check_install() {
   if [ ! -d "${K8PO_REPO_ROOT}" ]; then
@@ -18,24 +18,37 @@ function check_install() {
   fi
 }
 
+function check_config() {
+  if [ ! -d "${K8PO_CONFIG_ROOT}" ]; then
+    echo "no .k8po config found at '${K8PO_CONFIG_ROOT}', aborting"
+    exit 1
+  fi
+}
+
 # thanks to https://www.christianengvall.se/check-for-changes-on-remote-origin-git-repository/
 function check_update() {
+  if [ ! -d "${K8PO_REPO_ROOT}" ]; then
+    echo 'tried to update but there is no k8po-cli installation'
+    return 0
+  fi
+
   pushd "${K8PO_REPO_ROOT}"
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [ "${branch}" != "main" ]; then
       echo 'tried to check k8po-cli repo for updates but not on main.'
-    else
-      git fetch
-      headhash=$(git rev-parse HEAD)
-      upstreamhash=$(git rev-parse main@{upstream})
+      return 0
+    fi
 
-      if [ "${headhash}" != "${upstreamhash}" ]; then
-        read -p "k8po-cli is out of date; would you like to update? [y/n]: " -n 1 -r
-        echo
-        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-          git pull
-          reinstall
-        fi
+    git fetch
+    headhash=$(git rev-parse HEAD)
+    upstreamhash=$(git rev-parse main@{upstream})
+
+    if [ "${headhash}" != "${upstreamhash}" ]; then
+      read -p "k8po-cli is out of date; would you like to update? [y/n]: " -n 1 -r
+      echo
+      if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+        git pull
+        reinstall
       fi
     fi
   popd
@@ -49,8 +62,10 @@ function reinstall() {
 
 check_install
 check_update
+check_config
 
 cmd=$1
+echo "running command '${cmd} ${@:2}'"
 if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
-  ${K8PO_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}
+  ${K8PO_CONFIG_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}
 fi
