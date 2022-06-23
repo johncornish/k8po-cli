@@ -35,7 +35,7 @@ function check_update() {
   pushd "${K8PO_REPO_ROOT}"
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [ "${branch}" != "main" ]; then
-      echo 'tried to check k8po-cli repo for updates but not on main.'
+      echo "tried to check k8po-cli repo for updates but branch was '${branch}'."
       return 0
     fi
 
