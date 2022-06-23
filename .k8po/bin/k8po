@@ -5,12 +5,16 @@ K8PO_ROOT=~/.k8po
 
 function check_install() {
   if [ ! -d "${K8PO_REPO_ROOT}" ]; then
-    mkdir -p ~/workspace/
-    pushd ~/workspace/
-      git clone git@github.com:johncornish/k8po-cli.git
-    popd
+    read -p "k8po-cli is not installed at '${K8PO_REPO_ROOT}'; would you like to install it? [y/n]: " -n 1 -r
+    echo
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+      mkdir -p ~/workspace/
+      pushd ~/workspace/
+        git clone git@github.com:johncornish/k8po-cli.git
+      popd
 
-    reinstall
+      reinstall
+    fi
   fi
 }
 
