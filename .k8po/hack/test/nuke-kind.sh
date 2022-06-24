@@ -4,7 +4,10 @@ K8PO_CONFIG_ROOT=~/.k8po
 source ${K8PO_CONFIG_ROOT}/hack/test/k8po-init.sh
 
 function main() {
-  echo "main called with args '$@'"
+  # TODO: what if we run a check and automatically start Docker?
+  # I run into this every freaking time.
+  kind delete cluster
+	kind create cluster
 }
 
 main $@

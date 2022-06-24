@@ -63,9 +63,7 @@ function reinstall() {
 function main() {
   cmd=$1
   echo "running command '${cmd} ${@:2}'"
-  if [[ "${cmd}" == "test-wavefront-metrics" ]]; then
-    ${K8PO_CONFIG_ROOT}/hack/test/test-wavefront-metrics.sh ${@:2}
-  fi
+  ${K8PO_CONFIG_ROOT}/hack/test/${cmd}.sh ${@:2}
 }
 
 check_install
