@@ -66,8 +66,19 @@ function main() {
   ${K8PO_CONFIG_ROOT}/hack/test/${cmd}.sh ${@:2}
 }
 
-check_install
-check_update
+if [ "${RUN_CHECKS}" == "" ]; then
+  # TODO: usage options: ci, both, install, update
+  RUN_CHECKS="both"
+fi
+
+if [ "${RUN_CHECKS}" == "ci" ]; then
+  echo "RUN_CHECKS set to '${RUN_CHECKS}'; skipping checks"
+else
+  [[ "${RUN_CHECKS}" == "both" || "${RUN_CHECKS}" == "install" ]] && check_install
+  [[ "${RUN_CHECKS}" == "both" || "${RUN_CHECKS}" == "update" ]] && check_update
+fi
+
+# always run; this is where the scripts are installed
 check_config
 
 main $@
