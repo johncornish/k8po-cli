@@ -1,7 +1,6 @@
 #!/usr/bin/env bash -e
 
 K8PO_REPO_ROOT=~/workspace/k8po-cli
-K8PO_CONFIG_ROOT=~/.k8po
 
 function check_install() {
   if [ ! -d "${K8PO_REPO_ROOT}" ]; then
@@ -15,13 +14,6 @@ function check_install() {
 
       reinstall
     fi
-  fi
-}
-
-function check_config() {
-  if [ ! -d "${K8PO_CONFIG_ROOT}" ]; then
-    echo "no .k8po config found at '${K8PO_CONFIG_ROOT}', aborting"
-    exit 1
   fi
 }
 
@@ -63,7 +55,7 @@ function reinstall() {
 function main() {
   cmd=$1
   echo "running command '${cmd} ${@:2}'"
-  ${K8PO_CONFIG_ROOT}/hack/test/${cmd}.sh ${@:2}
+  ${K8PO_REPO_ROOT}/hack/test/${cmd}.sh ${@:2}
 }
 
 if [ "${RUN_CHECKS}" == "" ]; then
@@ -77,8 +69,5 @@ else
   [[ "${RUN_CHECKS}" == "both" || "${RUN_CHECKS}" == "install" ]] && check_install
   [[ "${RUN_CHECKS}" == "both" || "${RUN_CHECKS}" == "update" ]] && check_update
 fi
-
-# always run; this is where the scripts are installed
-check_config
 
 main $@

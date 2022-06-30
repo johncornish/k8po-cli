@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-K8PO_CONFIG_ROOT=~/.k8po
-source ${K8PO_CONFIG_ROOT}/hack/test/k8po-init.sh
+K8PO_REPO_ROOT=~/workspace/k8po-cli
+source ${K8PO_REPO_ROOT}/hack/test/k8po-init.sh
 
 function curl_query_to_wf_dashboard() {
   local query=$1
