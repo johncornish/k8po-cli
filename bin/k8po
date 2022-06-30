@@ -54,6 +54,10 @@ function reinstall() {
 
 function main() {
   cmd=$1
+  if [ -z "${cmd}" ]; then
+    # silently exit in case we're running quick install
+    exit 0
+  fi
   echo "running command '${cmd} ${@:2}'"
   ${K8PO_REPO_ROOT}/hack/test/${cmd}.sh ${@:2}
 }
