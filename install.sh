@@ -33,7 +33,8 @@ function check_update() {
   pushd "${K8PO_REPO_ROOT}" > /dev/null
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [ "${branch}" != "main" ]; then
-      echo "tried to check k8po-cli repo for updates but branch was '${branch}'."
+      echo "WARNING: I noticed your installation of 'k8po-cli' is on branch '${branch}' instead of 'main'--you are using a custom version of 'k8po-cli'"
+      echo "skipping auto-updates for branch '${branch}'"
       return 0
     fi
 
