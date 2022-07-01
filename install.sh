@@ -3,9 +3,9 @@
 K8PO_REPO_ROOT=~/workspace/k8po-cli
 
 function reinstall() {
-  pushd "${K8PO_REPO_ROOT}"
+  pushd "${K8PO_REPO_ROOT}" > /dev/null
     ./install.sh
-  popd
+  popd > /dev/null
 }
 
 function check_install() {
@@ -14,9 +14,9 @@ function check_install() {
     echo
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       mkdir -p ~/workspace/
-      pushd ~/workspace/
+      pushd ~/workspace/ > /dev/null
         git clone git@github.com:johncornish/k8po-cli.git
-      popd
+      popd > /dev/null
 
       reinstall
     fi
@@ -30,7 +30,7 @@ function check_update() {
     return 0
   fi
 
-  pushd "${K8PO_REPO_ROOT}"
+  pushd "${K8PO_REPO_ROOT}" > /dev/null
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [ "${branch}" != "main" ]; then
       echo "tried to check k8po-cli repo for updates but branch was '${branch}'."
@@ -49,7 +49,7 @@ function check_update() {
         reinstall
       fi
     fi
-  popd
+  popd > /dev/null
 }
 
 function main() {
