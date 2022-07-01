@@ -1,7 +1,12 @@
 #!/usr/bin/env bash -e
 
 K8PO_REPO_ROOT=~/workspace/k8po-cli
-if [ ! -d "${K8PO_REPO_ROOT}" ]; then
+
+if [ -d "${K8PO_REPO_ROOT}" ]; then
+  pushd "${K8PO_REPO_ROOT}"
+    ./install.sh
+  popd
+else
   bash -c "$(curl https://raw.githubusercontent.com/johncornish/k8po-cli/main/install.sh)"
 fi
 

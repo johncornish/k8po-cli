@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -e
 
-K8PO_REPO_ROOT=$(git rev-parse --show-toplevel)
+K8PO_REPO_ROOT=~/workspace/k8po-cli
 
 function reinstall() {
   pushd "${K8PO_REPO_ROOT}"
