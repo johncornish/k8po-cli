@@ -70,3 +70,5 @@ if ! command -v k8po &> /dev/null; then
     echo 'add the following to your shell profile:'
     echo 'export PATH="$PATH:$HOME/workspace/k8po-cli/bin"'
 fi
+
+main $@
