@@ -22,6 +22,6 @@ sed -i '' "s/VARS/${vars_str}/g" $new_command_file
 
 usage_checks_str=""
 for arg in $command_args; do
-  usage_checks_str+="check_arg ${arg} "'$'"${arg}"' $USAGE; '
+  usage_checks_str+='check_arg "${USAGE}" '"${arg} "'$'"${arg}; "
 done
 sed -i '' "s/USAGE_CHECKS/${usage_checks_str}/g" $new_command_file

@@ -35,9 +35,9 @@ function wait_for_cluster_ready() {
 }
 
 function check_arg() {
-  arg_name=$1
-  arg_val=$2
-  usage=$3
+  usage=$1
+  arg_name=$2
+  arg_val=$3
   if [ -z "${arg_val}" ]; then
     echo "missing argument '${arg_name}'; usage '${usage}'"
     exit 1
