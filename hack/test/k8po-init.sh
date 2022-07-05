@@ -33,3 +33,13 @@ function wait_for_cluster_ready() {
   done
   echo "All Pods are Ready"
 }
+
+function check_arg() {
+  usage=$1
+  arg_name=$2
+  arg_val=$3
+  if [ -z "${arg_val}" ]; then
+    echo "missing argument '${arg_name}'; usage '${usage}'"
+    exit 1
+  fi
+}
