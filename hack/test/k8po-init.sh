@@ -43,3 +43,18 @@ function check_arg() {
     exit 1
   fi
 }
+
+function confirm() {
+  message=$1
+  read -p "${message}"' [y/n]: ' -n 1 -r
+  echo
+
+  # this creates output, which is basically like a return value in bash. Ugh, I'm sorry.
+  [[ "${REPLY}" =~ ^[Yy]$ ]]
+
+  # Keeping this for posterity.
+  # I thought it would be cool for this function to run the command
+  # but now I realize it's more normal for this to just return true/false
+  # and let the script writer deal with that.
+  # cmd_with_args=${@:2}
+}

@@ -7,7 +7,12 @@ USAGE='k8po go-get-tool <tool_path> <tool_mod_link>'
 function main() {
   tool_path=$1; tool_mod_link=$2; 
 
-  check_arg "${USAGE}" tool_path $tool_path; check_arg "${USAGE}" tool_mod_link $tool_mod_link; 
+  check_arg "${USAGE}" tool_path $tool_path; check_arg "${USAGE}" tool_mod_link $tool_mod_link;
+
+  go_version=$(go version | awk -F ' ' '{print $3}')
+  if [ "${go_version}" == 'go1.18' ]; then
+    confirm 'go version is 1.18 and this will assuredly break things if you are in the Operator! Proceed?' || exit 0
+  fi
 
   repo_root=$(git rev-parse --show-toplevel)
   tool_dir="${repo_root}/bin"
