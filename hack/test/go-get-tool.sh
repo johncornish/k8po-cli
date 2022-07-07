@@ -26,7 +26,13 @@ function main() {
     exit 0
   fi
 
-  GOBIN="${tool_dir}" go install "${tool_mod_link}"
+  TMP_DIR=$(mktemp -d)
+  pushd "${TMP_DIR}" > /dev/null
+    go mod init tmp
+    GOBIN="${tool_dir}" go install "${tool_mod_link}"
+  popd > /dev/null
+  rm -rf $TMP_DIR
+  # PAIR WITH MATT AND INCLUDE ResourceManager SPIKE
 }
 
 main $@
