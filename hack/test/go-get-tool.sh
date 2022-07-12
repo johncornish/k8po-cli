@@ -27,6 +27,7 @@ function main() {
   fi
 
   TMP_DIR=$(mktemp -d)
+  # GLOSSARY/WTF: push and pop output
   pushd "${TMP_DIR}" > /dev/null
     go mod init tmp
     GOBIN="${tool_dir}" go install "${tool_mod_link}"

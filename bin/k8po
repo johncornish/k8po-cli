@@ -6,7 +6,7 @@ if [ -d "${K8PO_REPO_ROOT}" ]; then
   pushd "${K8PO_REPO_ROOT}" > /dev/null
     ./install.sh
   popd > /dev/null
-else
+elif [ "${RUN_CHECKS}" != "ci" ]; then
   bash -c "$(curl https://raw.githubusercontent.com/johncornish/k8po-cli/main/install.sh)"
 fi
 
