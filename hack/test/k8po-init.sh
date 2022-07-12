@@ -45,7 +45,7 @@ function check_arg() {
 }
 
 function confirm() {
-  if [ "${NON_INTERACTIVE:-'false'}" != "false" ]; then
+  if [ "${NON_INTERACTIVE:-false}" != "false" ]; then
     return 0
   fi
 
