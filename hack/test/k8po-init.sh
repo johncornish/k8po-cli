@@ -45,6 +45,10 @@ function check_arg() {
 }
 
 function confirm() {
+  if [ "${NON_INTERACTIVE:-'false'}" != "false" ]; then
+    return 0
+  fi
+
   message=$1
   read -p "${message}"' [y/n]: ' -n 1 -r
   echo
