@@ -1,24 +1,18 @@
 #!/usr/bin/env bash -e
 
 K8PO_REPO_ROOT=~/workspace/k8po-cli
+if [ ! -d "${K8PO_REPO_ROOT}" ]; then
+  mkdir -p ~/workspace/
+  pushd ~/workspace/ > /dev/null
+    git clone https://github.com/johncornish/k8po-cli.git
+  popd > /dev/null
+fi
+source ${K8PO_REPO_ROOT}/hack/test/k8po-init.sh
 
 function reinstall() {
   pushd "${K8PO_REPO_ROOT}" > /dev/null
     ./install.sh
   popd > /dev/null
-}
-
-function check_install() {
-  if [ ! -d "${K8PO_REPO_ROOT}" ]; then
-    confirm "k8po-cli is not installed at '${K8PO_REPO_ROOT}'; would you like to install it?" || return 0
-
-    mkdir -p ~/workspace/
-    pushd ~/workspace/ > /dev/null
-      git clone git@github.com:johncornish/k8po-cli.git
-    popd > /dev/null
-
-    reinstall
-  fi
 }
 
 # thanks to https://www.christianengvall.se/check-for-changes-on-remote-origin-git-repository/
@@ -50,7 +44,6 @@ function check_update() {
 }
 
 function main() {
-  check_install
   check_update
 }
 
