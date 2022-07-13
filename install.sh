@@ -1,9 +1,9 @@
 #!/usr/bin/env bash -e
 
-K8PO_REPO_ROOT=~/workspace/k8po-cli
+K8PO_REPO_ROOT=$HOME/workspace/k8po-cli
 if [ ! -d "${K8PO_REPO_ROOT}" ]; then
-  mkdir -p ~/workspace/
-  pushd ~/workspace/ > /dev/null
+  mkdir -p $HOME/workspace/
+  pushd $HOME/workspace/ > /dev/null
     git clone https://github.com/johncornish/k8po-cli.git
   popd > /dev/null
 fi
