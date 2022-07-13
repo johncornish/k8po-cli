@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -e
 
-K8PO_REPO_ROOT=~/workspace/k8po-cli
+K8PO_REPO_ROOT=$HOME/workspace/k8po-cli
 
 if [ "${RUN_CHECKS}" != "ci" ]; then
   if [ -d "${K8PO_REPO_ROOT}" ]; then
