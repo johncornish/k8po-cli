@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/bin/bash -e
 
 K8PO_REPO_ROOT=$HOME/workspace/k8po-cli
 
